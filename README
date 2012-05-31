@@ -35,5 +35,8 @@ $ ./evtchart.pl procevt_sample.txt
 There are various tunables at the top of the evtchart.pl program to customize
 the output.
 
+A PNG version of procevt_sample.svg has been included (converted using an
+external tool).
+
 Event charts can be used for other tasks, including function execution,
 provided that an evt log can be collected.
