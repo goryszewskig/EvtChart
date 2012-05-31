@@ -1,0 +1,39 @@
+Event Charts visualize event logs
+
+Event logs are a simple format for describing generic events, including start
+and end times, event names, and parent-child relationships.  The canonical
+example is for process execution, tracing the creation of new processes, their
+child processes, and their duration.
+
+An event log has the following format:
+
+TIME(ns) EVENT ID ID_NAME PARENT_ID EXTRAS
+
+For example, the following shows a process log (generated using the included
+procevt.d DTrace script):
+
+TIME(ns) EVENT ID ID_NAME PARENT_ID EXTRAS
+93830738811087 start 66526 bash 93708
+93830740205965 change 66526 sleeptest.sh 93708
+93830741823055 change 66526 sleeptest.sh->ksh93 93708
+93830746023333 start 66527 ksh93 66526
+93830746221818 change 66527 sleep 66526
+93831749169097 end 66527 sleep 66526
+[...]
+
+This full example is in the included procevt_sample.txt log. This traces the
+execution of the example sleeptest.sh script, also included.
+
+The log file was generated using:
+
+# ./procevt.d > procevt_sample.txt
+
+And the event chart SVG (renamed to procevt_sample.svg) was generated using:
+
+$ ./evtchart.pl procevt_sample.txt
+
+There are various tunables at the top of the evtchart.pl program to customize
+the output.
+
+Event charts can be used for other tasks, including function execution,
+provided that an evt log can be collected.
