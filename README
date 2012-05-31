@@ -7,24 +7,33 @@ child processes, and their duration.
 
 An event log has the following format:
 
-TIME(ns) EVENT ID ID_NAME PARENT_ID EXTRAS
+	TIME(ns) EVENT ID ID_NAME PARENT_ID EXTRAS
 
 For example, the following shows a process log (generated using the included
 procevt.d DTrace script):
 
-TIME(ns) EVENT ID ID_NAME PARENT_ID EXTRAS
-93830738811087 start 66526 bash 93708
-93830740205965 change 66526 sleeptest.sh 93708
-93830741823055 change 66526 sleeptest.sh->ksh93 93708
-93830746023333 start 66527 ksh93 66526
-93830746221818 change 66527 sleep 66526
-93831749169097 end 66527 sleep 66526
-[...]
+	TIME(ns) EVENT ID ID_NAME PARENT_ID EXTRAS
+	93830738811087 start 66526 bash 93708
+	93830740205965 change 66526 sleeptest.sh 93708
+	93830741823055 change 66526 sleeptest.sh->ksh93 93708
+	93830746023333 start 66527 ksh93 66526
+	93830746221818 change 66527 sleep 66526
+	93831749169097 end 66527 sleep 66526
+	[...]
 
-This full example is in the included procevt_sample.txt log. This traces the
+This full log is in the included procevt_sample.txt file.  This traces the
 execution of the example sleeptest.sh script, also included.
 
-The log file was generated using:
+The procevt.d script maps process events to event log fields using:
+
+	EVENT = "start", for fork()
+	EVENT = "change", for exec()
+	EVENT = "end", for exit()
+	ID = PID
+	ID_NAME = execname
+	PARENT_ID = PPID
+
+It was executed and redirected to the log file using:
 
 # ./procevt.d > procevt_sample.txt
 
