@@ -1,4 +1,4 @@
-Event Charts visualize event logs
+Event Time Charts visualize event logs
 
 Event logs are a simple format for describing generic events, including start
 and end times, event names, and parent-child relationships.  The canonical
